@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+	version="2.0">
+
+	<persistence-unit name="casadocodigo-dev" transaction-type="JTA">
+        <description>Dev persistence unit</description>
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        
+        <!--  Um datasource é a fonte de dados do sistema. Essa fonte (local onde obtemos os dados) é ligada a JTA. O JTA (Java Transaction API) é a API de transações que cuida de toda a transação da nossa aplicação, onde começa e termina, e quando realizar o rollback das transações. -->
+        <!-- java transaction api || JNDI -->
+        <!-- o valor tem um recurso relacionado a ele e este recurso é o nosso datasource -->
+        <!-- verificar arquivo standalone-full.xml e localize a tag <datasources> -->
+        <jta-data-source>java:jboss/datasources/casadocodigoDS</jta-data-source>
+        <properties>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.format_sql" value="true" />
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
+        </properties>
+    </persistence-unit>
+
+</persistence>

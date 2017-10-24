@@ -1,0 +1,15 @@
+ messages bundles
+ 
+ javax.faces.component.UIInput que se refere ao <h:inputText />
+ 
+ O valor {0} é o nome do campo que foi validado, 
+ o valor {2} é o valor do campo
+ 
+ converter:será lançado quando o JSF não conseguir converter o valor digitado pelo usuário para esses tipos.
+ 
+ utilizando BeanValidator: {0} : estamos informando que só queremos exibir a mensagem.
+ 
+ incluir arquivo no faces-config.xml  src/main/webapp/WEB-INF/
+ 
+ http://bit.ly/1DsZKvf
+ arquivo de validações p/ baixar, inclusive cnpj, etc
