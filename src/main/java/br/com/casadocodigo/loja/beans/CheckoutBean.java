@@ -32,7 +32,7 @@ public class CheckoutBean {
 	@Transactional // toda vez que nós realizamos uma operação que altera o estado do banco de
 					// dados, deverá haver uma transação
 	public void finalizar() {
-		Compra compra = new Compra(); // Compra é iguial ao usuario e os itens q desejamos comprar
+		Compra compra = new Compra(); // Compra é igual ao usuario e os itens q desejamos comprar
 		compra.setUsuario(usuario); // o usuário é setado na compra
 
 		carrinho.finalizar(compra); // salvar os itens do carrinho
@@ -41,11 +41,15 @@ public class CheckoutBean {
 		// requisição, como se fosse um componete externo, mas dentro da própria
 		// aplicação.o que queremos fazer de fato, é pegar o response, tratá-lo e
 		// enviá-lo para outro local.
-		String contextName = facesContext.getExternalContext().getContextName();
+		String contextName = facesContext.getExternalContext().getRequestContextPath();// /casadocodigo
 		HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
-		response.setStatus(307); // redirect temporário mantendo o método que foi invocado.
-		response.setHeader("Location", "/" + contextName + "/service/pagamento?id=" + compra.getUuid());// dizer para o
-																										// response qual
-																										// a URL
+		// response.setStatus(307); // redirect temporário mantendo o método que foi
+		// invocado.
+		response.setStatus(HttpServletResponse.SC_TEMPORARY_REDIRECT);// no lugar do 0307
+		response.setHeader("Location", contextName + "/service/pagamento?uuid=" + compra.getUuid());// precisa ser
+																									// atendida por um
+																									// serviço do tipo
+																									// REST
+
 	}
 }

@@ -1,5 +1,6 @@
 package br.com.casadocodigo.loja.models;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
@@ -30,6 +31,12 @@ public class Compra {
 							// mude, compras passadas não serão afetadas.
 	// XML, JSON: Estes formatos texto são os mais comuns para transportar dados de
 	// um sistema para outro!
+
+	private BigDecimal total;
+
+	public void setTotal(BigDecimal total) {
+		this.total = total;
+	}
 
 	public Integer getId() {
 		return id;
@@ -68,5 +75,10 @@ public class Compra {
 				// método
 	public void createUUID() {
 		this.uuid = UUID.randomUUID().toString();// será gerado o UUID de maneira aleatória
+	}
+
+	public BigDecimal getTotal() {
+		// TODO Auto-generated method stub
+		return total;
 	}
 }

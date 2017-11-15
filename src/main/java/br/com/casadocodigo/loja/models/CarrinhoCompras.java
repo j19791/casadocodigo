@@ -69,6 +69,9 @@ public class CarrinhoCompras implements Serializable {
 	public void finalizar(Compra compra) {// Usuario usuario
 
 		compra.setItens(this.toJson());// os itens da compra serão pegos dos itens do carrinho de compras
+
+		compra.setTotal(this.getTotal());
+
 		// usuarioDao.salvar(usuario);//nao precisa mais pois usuario esta sendo salvo
 		// em cascata
 		compraDao.salvar(compra);
