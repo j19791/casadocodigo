@@ -13,7 +13,11 @@
         <!-- o valor tem um recurso relacionado a ele e este recurso é o nosso datasource -->
         <!-- verificar arquivo standalone-full.xml e localize a tag <datasources> -->
         <jta-data-source>java:jboss/datasources/casadocodigoDS</jta-data-source>
+        <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode><!--  o JPA também precisa saber que queremos cachear -->
         <properties>
+        	<property name="hibernate.cache.infinispan.entity.expiration.lifespan" value="900000"/> <!-- O Wildfly possui o infinispan que já faz o cache e se comunica com o Hibernate. Podemos passar para o infinispan quanto tempo queremos que ele guarde no cache as entidadem em ms -->
+        	<property name="hibernate.cache.infinispan.entity.expiration.max_idle" value="300000"/><!-- quantidade de tempo q o cache fica inativo, sem uso. Depois de 300000ms com a entidade inativa, é feito um novo select -->
+        	<property name="hibernate.cache.use_query_cache" value="true"/><!-- O Hibernate precisa que digamos explicitamente que queremos fazer cache com as queries. -->
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.show_sql" value="true" />
             <property name="hibernate.format_sql" value="true" />

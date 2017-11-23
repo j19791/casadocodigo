@@ -3,9 +3,12 @@ package br.com.casadocodigo.loja.daos;
 import java.util.List;
 
 import javax.ejb.Stateful;
+import javax.persistence.Cache;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
+
+import org.hibernate.jpa.QueryHints;
 
 import br.com.casadocodigo.loja.models.Livro;
 
@@ -35,13 +38,35 @@ public class LivroDao {
 	public List<Livro> ultimosLancamentos() {
 		String jpql = "select l from Livro l order by l.id desc";
 		// queremos apenas os últimos 5 livros cadastrados.
-		return manager.createQuery(jpql, Livro.class).setMaxResults(5).getResultList();
+		return manager.createQuery(jpql, Livro.class).setMaxResults(5).setHint(QueryHints.HINT_CACHEABLE, true)// fazer
+																												// com
+																												// que
+																												// as
+																												// queries
+																												// vão
+																												// para
+																												// o
+																												// cache
+				.getResultList();
 	}
 
 	public List<Livro> demaisLivros() {
 		String jpql = "select l from Livro l order by l.id desc";
 		// informar que o primeiro resultado é do 5º em diante (0-4). (fora os lanctos)
-		return manager.createQuery(jpql, Livro.class).setFirstResult(5).getResultList();
+		return manager.createQuery(jpql, Livro.class).setFirstResult(5).setHint(QueryHints.HINT_CACHEABLE, true)
+				.getResultList();
+	}
+
+	public void limpaCache() {
+
+		// abaixo, utilizando o jpa - o hibernate ainda tem suas próprias extensões de
+		// cache
+		Cache cache = manager.getEntityManagerFactory().getCache();// pegar as entidades que estão dentro do cache e
+																	// fazer uma determinada atualização delas
+
+		cache.evict(Livro.class);// o método evict() passando o Livro para limpar seu cache.
+		// evict(Livro.class, 1l) pegaria apenas o primeiro livro da lista, por exemplo.
+		// evictAll() - limpa o cache de todos, seja livro, autor, etc
 	}
 
 	public Livro buscarPorId(Integer id) {

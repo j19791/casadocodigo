@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:o="http://omnifaces.org/ui"> <!-- utilizando o ominifaces -->
 	
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
@@ -209,7 +210,7 @@
 
 <main>
 		
-	
+<o:cache scope="application"><!-- realizar o cache da área da página abaixo. default é o escope de sessão (por usuário). Application: serve p/ todos os usuários -->
 <section class="vitrineDestaquinho container">
 	<h2 class="vitrineDestaquinho-titulo">Últimos lançamentos</h2>
 	<ul class="vitrineDestaquinho-lista">
@@ -250,7 +251,7 @@
     	</ui:repeat>		
 	</ul>
 </section>
-
+</o:cache>
 
 		<div class="buscaDoRodape container" role="presentation">
 	<form role="search" aria-labelledby="rotuloBuscaDoRodape" action="https://www.casadocodigo.com.br/search" method="GET" class="buscaDoRodape-formulario">
