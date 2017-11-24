@@ -18,12 +18,25 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Cacheable // precisamos falar que as entidades serão cacheadas
+@XmlRootElement // para disponibilizar um serviço rest que retorna xml, existe outra
+				// especificação que trata da transformação para XML, a JAXB. Essa especificação
+				// diz que um objeto precisa estar mapeado como XmlRootElement.
+				// a implementação do JAX-RS do Wildfly default, que é a RESTEasy, então não
+				// precisará fazer nada. Por si só o RESTEasey faz a transformação do livro em
+				// uma lista de livros
+@XmlAccessorType(XmlAccessType.FIELD) // informando que queremos o acesso através do campo (field), será acessado
+										// diretamente o campo, como titulo, descricao:
 public class Livro {
 
 	@Id
@@ -47,6 +60,8 @@ public class Livro {
 	@ManyToMany // cria uma tabela auxiliar
 	@Size(min = 1) // número mínimo de elementos na lista
 	@NotNull // A lista não pode ser nula
+	@XmlElement(name = "autor")
+	@XmlElementWrapper(name = "autores")
 	private List<Autor> autores = new ArrayList<Autor>();// para evitar null
 
 	@Temporal(TemporalType.DATE) // apenas a data sem hora
