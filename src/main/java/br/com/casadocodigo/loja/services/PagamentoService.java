@@ -37,7 +37,7 @@ public class PagamentoService {
 	@Inject // O JMS é uma espec do JEE p/ enviar uma mensagem assíncrona.
 	private JMSContext jmsContext;// objeto que tem toda a comunicação com o servidor. Podemos criar a mensagem.
 
-	@Resource(name = "java/jms/topics/CarrinhoComprasTopico") // O destination é um recurso JMS encontrado através do
+	@Resource(name = "java:/jms/topics/CarrinhoComprasTopico") // O destination é um recurso JMS encontrado através do
 																// JNDI
 	// tipos de mensagens assíncronas:
 	// Tópico (topic): lista de discussão onde todos recebem a mesma mensagem.

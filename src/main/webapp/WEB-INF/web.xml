@@ -15,5 +15,28 @@
     <param-value>900</param-value><!-- indicando 900 segundos de vida útil de cache -->
 </context-param>
 
+<!-- URLs de administração, que se encontram em /livros/*, não poderão ser acessados até que o usuário se logue e tenha permissões para fazer esse acesso (role ADMIN). -->
+<security-constraint>
+        <display-name>Administration</display-name>
+        <web-resource-collection>
+            <web-resource-name>administration</web-resource-name>
+            <description>URLs que levam para a adminstração da loja</description>
+            <url-pattern>/livros/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>ADMIN</role-name>
+        </auth-constraint>
+    </security-constraint>
+    
+    <!-- Configuração da forma de login. indicando que a autenticação será via formulário: -->
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <form-login-config>
+            <form-login-page>/usuarios/login.xhtml</form-login-page>
+            <form-error-page>/usuarios/login.xhtml</form-error-page><!-- redirecionamento qdo s/ autorização -->
+        </form-login-config>
+    </login-config>
 
 </web-app>
