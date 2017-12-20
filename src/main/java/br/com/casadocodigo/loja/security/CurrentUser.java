@@ -40,4 +40,10 @@ public class CurrentUser {
 	public boolean hasRole(String name) {
 		return request.isUserInRole(name);
 	}
+
+	public String logout() {
+		request.getSession().invalidate(); // invalida a sessão do JAAS
+
+		return "/livros/lista.xhtml?faces-redirect=true";// vai p/ login pois nao esta autenticado
+	}
 }

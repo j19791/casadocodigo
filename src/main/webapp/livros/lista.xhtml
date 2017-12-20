@@ -7,69 +7,54 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	>
 	
-	<h:head><!-- servem para que o JSF possa identificar corretamente onde é o cabeçalho da página -->
-		<h:outputStylesheet library="css" name="bootstrap.min.css" /><!-- JSF 2.2 já considera a pasta resources como sendo padrão -->
-		<h:outputStylesheet library="css" name="style-admin.css" />
-	</h:head>
+<ui:composition template="/templates/_admin_template.xhtml">
+	 
+	 <ui:param name="lista" value="active" /><!-- utilizando parametros p/ ser passado ao template -->
+	 
+	<ui:define name="body"><!-- conteudo abaixo sera usado p/ preencher o template -->
 	
-	<h:body><!-- servem para que o JSF possa identificar corretamente onde é o corpo da página -->
+		<h1>Lista de Livros</h1>
+		
+		<div>
+	        Bem vindo, #{currentUser.get().email}
+	    </div>
+	    
+		<h:messages /> <!-- exibe todas as mensagens adicionadas ao FacesMessage -->
 	
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="#">Casa do Código</a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Lista</a></li>
-            <li><h:link value="Cadastro" outcome="form" /></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+		<!-- value:  livro vem da lista de livros -->
+		<h:dataTable var="livro" value="#{adminListaLivrosBean.livros}" class="table table-bordered table-striped table-hover">
+	       <h:column>
+	            <f:facet name="header">Título</f:facet><!-- facet cria um cabeçalho na nossa coluna. -->
+	            #{livro.titulo}
+	        </h:column>
+	        <h:column>
+	            <f:facet name="header">Descrição</f:facet>
+	            #{livro.descricao}
+	        </h:column>
+	        <h:column>
+	            <f:facet name="header">Páginas</f:facet>
+	            #{livro.numeroPaginas}
+	        </h:column>
+	        <h:column>
+	            <f:facet name="header">Preço</f:facet>
+	            #{livro.preco}
+	        </h:column>
+	        <h:column>
+	            <f:facet name="header">Autores</f:facet>
+	            <!--ui:repeat vai iterar e imprimir todos os autores vinculados a cada livro. Value é a lista e o var o variável que ficará disponível com o autor dentro do for -->
+	            <ui:repeat value="#{livro.autores}" var="autor">
+	                #{autor.nome},
+	            </ui:repeat>
+	        </h:column>
+	        <h:column>
+			    <f:facet name="header">Capa Path</f:facet>
+			    <img src="#{request.contextPath}/file/#{livro.capaPath}" height="30%" alt="#{livro.titulo}" />
+			</h:column>
+		</h:dataTable>
 	
-	<div class="container">
-	
-	<h1>Lista de Livros</h1>
-	
-	<div>
-        Bem vindo, #{currentUser.get().email}
-    </div>
-    
-	<h:messages /> <!-- exibe todas as mensagens adicionadas ao FacesMessage -->
+	 </ui:define>
 
-	<!-- value:  livro vem da lista de livros -->
-	<h:dataTable var="livro" value="#{adminListaLivrosBean.livros}" class="table table-bordered table-striped table-hover">
-       <h:column>
-            <f:facet name="header">Título</f:facet><!-- facet cria um cabeçalho na nossa coluna. -->
-            #{livro.titulo}
-        </h:column>
-        <h:column>
-            <f:facet name="header">Descrição</f:facet>
-            #{livro.descricao}
-        </h:column>
-        <h:column>
-            <f:facet name="header">Páginas</f:facet>
-            #{livro.numeroPaginas}
-        </h:column>
-        <h:column>
-            <f:facet name="header">Preço</f:facet>
-            #{livro.preco}
-        </h:column>
-        <h:column>
-            <f:facet name="header">Autores</f:facet>
-            <!--ui:repeat vai iterar e imprimir todos os autores vinculados a cada livro. Value é a lista e o var o variável que ficará disponível com o autor dentro do for -->
-            <ui:repeat value="#{livro.autores}" var="autor">
-                #{autor.nome},
-            </ui:repeat>
-        </h:column>
-        <h:column>
-		    <f:facet name="header">Capa Path</f:facet>
-		    <img src="#{request.contextPath}/file/#{livro.capaPath}" height="30%" alt="#{livro.titulo}" />
-		</h:column>
-	</h:dataTable>
+</ui:composition>
 
-	</div>
 
-</h:body>
 </html>
