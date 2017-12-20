@@ -14,3 +14,5 @@ Projeto Casa do Código JEE desenvolvido no Curso Java EE parte 1, 2 e 3
 - Disponibilizando dados em JSON e XML
 - Envio de email com JMS
 - Segurança de dados com JAAS
+- Templates com Facelets
+- WebSockets
