@@ -44,6 +44,6 @@ public class CurrentUser {
 	public String logout() {
 		request.getSession().invalidate(); // invalida a sessão do JAAS
 
-		return "/livros/lista.xhtml?faces-redirect=true";// vai p/ login pois nao esta autenticado
+		return "/admin/livros/lista.xhtml?faces-redirect=true";// vai p/ login pois nao esta autenticado
 	}
 }
